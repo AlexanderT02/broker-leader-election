@@ -18,7 +18,6 @@ target/
 # GitHub Classroom
 .github/**
 src/main/resources/**
-src/test/**
 pom.xml
 
 # AWS User-specific
