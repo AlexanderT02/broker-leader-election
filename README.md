@@ -4,7 +4,7 @@
 The Broker Leader Election project is designed to ensure a robust method for leader selection in distributed systems. It leverages consensus algorithms to determine a leader, minimizing downtime and maximizing efficiency.
 
 ## System Requirements
-- **Java Runtime Environment**: Version 11 or higher
+- **Java Runtime Environment**: Version 21 or higher
 - **Memory**: Minimum 1GB RAM
 - **Disk Space**: At least 100MB free
 
