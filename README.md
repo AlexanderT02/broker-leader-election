@@ -1,84 +1,61 @@
-# Broker Leader Election & UDP Monitoring
+# README
 
-A distributed system for managing message brokers with automatic leader election and UDP-based monitoring.
+## Overview
+The Broker Leader Election project is designed to ensure a robust method for leader selection in distributed systems. It leverages consensus algorithms to determine a leader, minimizing downtime and maximizing efficiency.
 
-## Quick Start
+## System Requirements
+- **Java Runtime Environment**: Version 11 or higher
+- **Memory**: Minimum 1GB RAM
+- **Disk Space**: At least 100MB free
 
-### Prerequisites
-- Java JDK 21
-- Maven 3.8+
+## Installation Steps
+1. **Clone the repository:**  
+   ```bash
+   git clone https://github.com/AlexanderT02/broker-leader-election.git
+   cd broker-leader-election
+   ```  
 
-### Compilation & Running
+2. **Build the project:**  
+   ```bash
+   ./gradlew build
+   ```  
 
-```bash
-mvn compile
-```
+3. **Run the application:**  
+   ```bash
+   ./gradlew run
+   ```
 
-Run individual components:
-```bash
-mvn exec:java@broker-0
-mvn exec:java@broker-1
-mvn exec:java@broker-2
-mvn exec:java@dns-0
-mvn exec:java@monitoring-0
-```
+## Detailed Component Descriptions
+- **Leader Election Module**: Implements the core logic for selecting the leader.
+- **Communication Module**: Handles communication between nodes.
+- **Data Storage**: Manages persistent storage of state and configurations.
 
-## Components
+## Protocol Specifications
+The system operates on the Raft consensus protocol, ensuring that all nodes agree on a single source of truth, with the following phases:
+- **Candidate Phase**: A node requests votes from others to become the leader.
+- **Leader Phase**: The elected leader manages all client requests, replicating log entries to followers.
+- **Follower Phase**: Nodes acknowledge the leader's log entries and reply with their state.
 
-| Component | Port | Type |
-|-----------|------|------|
-| broker-0 | 20000/20001 | TCP |
-| broker-1 | 20010/20011 | TCP |
-| broker-2 | 20020/20021 | TCP |
-| dns-0 | 18000 | TCP |
-| monitoring-0 | 17000 | UDP |
+## Testing Information
+To ensure reliability, unit tests are included:
+- Use JUnit for testing various components.
+- Run tests using the following command:
+  ```bash
+  ./gradlew test
+  ```
 
-## Protocols
-
-### Leader Election Protocol (LEP)
-
-Connected clients receive: `ok LEP`
-
-| Command | Response |
-|---------|----------|
-| `elect <id>` | `ok` or `vote <sender-id> <candidate-id>` |
-| `declare <id>` | `ack <sender-id>` |
-| `ping` | `pong` |
-
-Invalid commands return: `error protocol error`
-
-## Testing
-
-```bash
-mvn test
-```
-
-Automated tests run via GitHub Actions on push.
-
-## Manual Testing with Netcat
-
-```bash
-nc localhost 20001
-# or on Windows: ncat -C localhost 20001
-
-> elect 0
-ok
-> declare 0
-ack 0
-> ping
-pong
-```
+## Troubleshooting
+Common issues include:
+- **Network Connectivity**: Ensure all nodes can communicate over the specified ports.
+- **Version Conflicts**: Ensure all nodes are using compatible software versions.
 
 ## Project Structure
-
 ```
-src/main/java/          <- Implementation code
-src/main/resources/     <- Configuration (protected)
-src/test/               <- Tests (protected)
+/broker-leader-election
+├── src
+│   ├── main
+│   ├── test
+├── build.gradle
+├── settings.gradle
+└── README.md
 ```
-
-**Protected files** (do not modify):
-- `.github/**/*`
-- `src/main/resources/**/*`
-- `src/test/**/*`
-- `pom.xml`
