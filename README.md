@@ -125,6 +125,27 @@ Result:
     hotel.bed.duvet   -> delivered
     hotel.room.clean  -> ignored
 
+## Message Flow
+
+The following diagram shows how a message moves through the broker from
+a publisher to a subscriber.
+
+``` mermaid
+flowchart LR
+Publisher --> Exchange
+Exchange --> Router
+Router --> Queue
+Queue --> Subscriber
+```
+
+1.  A publisher sends a message to the broker.
+2.  The message is received by an exchange.
+3.  The exchange forwards the message to the routing logic.
+4.  The router determines the correct queue using routing keys and
+    bindings.
+5.  The message is delivered to the subscriber.
+
+
 ------------------------------------------------------------------------
 
 # Leader Election Algorithms
