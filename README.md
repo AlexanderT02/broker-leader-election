@@ -59,27 +59,32 @@ Each broker contains several core components.
 
 ``` mermaid
 flowchart TB
-    Client[Client Connection]
-    Exchange[Exchange]
-    Router[Topic Router]
-    Queue[Queue]
-    Election[Leader Election]
-    Protocol[Custom TCP Protocols]
 
-    Client --> Exchange
-    Exchange --> Router
-    Router --> Queue
+Client[Client]
 
-    Election --> Protocol
+SMQP[SMQP Protocol Handler]
+
+Exchange[Exchange]
+Router[Topic Router]
+Queue[Queue]
+
+Election[Leader Election]
+
+Client --> SMQP
+SMQP --> Exchange
+Exchange --> Router
+Router --> Queue
+
+Election --- Exchange
 ```
 
 Responsibilities of a broker:
 
--   receive messages from clients
--   route messages through exchanges
--   deliver messages to queues
--   communicate with other brokers
--   participate in leader election
+- receive messages from clients via the SMQP protocol
+- route messages through exchanges and routing logic
+- deliver messages to queues
+- communicate with other brokers in the cluster
+- participate in leader election
 
 ------------------------------------------------------------------------
 
