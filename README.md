@@ -311,10 +311,12 @@ This project demonstrates core distributed systems concepts:
 
 # Technologies
 
-- Java 21  
-- TCP Sockets  
-- UDP Datagrams  
-- Gradle  
-- Concurrent Programming  
-- Distributed Algorithms
+| Technology | Purpose |
+|-----------|--------|
+| Java 21 | Core implementation |
+| Gradle | Build system |
+| TCP Sockets | Client and broker communication |
+| UDP | Monitoring statistics |
+| Concurrent Programming | Multi-client handling |
+| Distributed Algorithms | Leader election |
 
